@@ -46,7 +46,6 @@ def main():
         train_loader=train_loader,
         test_loader=test_loader,
         config=config,
-        device=device
     )
 
     trainer.train_model()
