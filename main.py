@@ -35,7 +35,7 @@ def main():
     print(f"{'='*40}\n")
 
     # 3. Load Data & Model
-    train_loader, test_loader = get_dataloaders(config)
+    train_loader, test_loader = get_dataloaders()
     
     # Initialize WideResNet28-10 for CIFAR-10 (10 classes)
     model = WideResNet28_10(num_classes=10).to(device)
