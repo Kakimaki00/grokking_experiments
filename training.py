@@ -30,7 +30,7 @@ class Trainer:
         os.makedirs(self.save_dir, exist_ok=True)
         
         # Optimizer
-        lr = self.config["lr"]
+        lr = self.config["learning_rate"]
         self.optimizer = optim.SGD(
             self.model.parameters(), 
             lr=lr, 
@@ -45,7 +45,7 @@ class Trainer:
         self.criterion = nn.KLDivLoss(reduction='batchmean')
 
     def _create_smoothed_targets(self, labels, num_classes):
-        smoothing = self.config["smoothing"]
+        smoothing = self.config["label_smoothing"]
         batch_size = labels.size(0)
         one_hot = torch.zeros(batch_size, num_classes, device=self.device)
         one_hot.scatter_(1, labels.unsqueeze(1), 1)
