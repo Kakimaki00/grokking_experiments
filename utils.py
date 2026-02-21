@@ -48,7 +48,7 @@ class PGDAttackLinf:
                 if labels is None:
                     raise ValueError("Labels required for CrossEntropy")
                 distance = nn.CrossEntropyLoss()(perturbed_outputs, labels)
-            elif loss_fn == "kl_div":
+            elif loss_fn == "kl":
                 distance = self.kl_divergence(perturbed_outputs, base_outputs)
             else:
                 raise ValueError(f"Unknown loss function {loss_fn}")
