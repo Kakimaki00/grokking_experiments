@@ -13,6 +13,7 @@ class Trainer:
         self.model = model.to(self.device)
         self.train_loader = train_loader
         self.test_loader = test_loader
+        self.config = config
         
         # Setup Hyperparameters
         self.epochs = 10000000
