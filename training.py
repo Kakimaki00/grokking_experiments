@@ -164,7 +164,6 @@ class Trainer:
         for epoch in range(self.epochs):
             train_metrics = self.train_one_epoch()
             test_metrics = self.test()
-            self.scheduler.step()
 
             print(f"Epoch [{epoch+1}/{self.epochs}]")
             print(f"  Train: Clean {train_metrics['clean_acc']:.1f}% | Linf {train_metrics['linf_acc']:.1f}% | L2 {train_metrics['l2_acc']:.1f}%")
