@@ -110,9 +110,9 @@ def get_dataloaders():
         print(f"WARNING: {base_npz_path} not found. Attempting to load from torchvision folder...")
         try:
             if dataset_name == 'CIFAR10':
-                train_set = torchvision.datasets.CIFAR10(root=data_root, train=True, transform=train_transform, download=False)
+                train_set = torchvision.datasets.CIFAR10(root=data_root, train=True, transform=train_transform, download=True)
             elif dataset_name == 'CIFAR100':
-                train_set = torchvision.datasets.CIFAR100(root=data_root, train=True, transform=train_transform, download=False)
+                train_set = torchvision.datasets.CIFAR100(root=data_root, train=True, transform=train_transform, download=True)
         except RuntimeError:
             raise FileNotFoundError(f"Error: Could not find {base_npz_path} or standard torchvision files in '{data_root}'.")
 
@@ -134,9 +134,9 @@ def get_dataloaders():
     # If that fails, look for a custom '_test.npz' file.
     try:
         if dataset_name == 'CIFAR10':
-            test_set = torchvision.datasets.CIFAR10(root=data_root, train=False, transform=test_transform, download=False)
+            test_set = torchvision.datasets.CIFAR10(root=data_root, train=False, transform=test_transform, download=True)
         elif dataset_name == 'CIFAR100':
-            test_set = torchvision.datasets.CIFAR100(root=data_root, train=False, transform=test_transform, download=False)
+            test_set = torchvision.datasets.CIFAR100(root=data_root, train=False, transform=test_transform, download=True)
     except RuntimeError:
         print("WARNING: Standard torchvision test set not found.")
         
