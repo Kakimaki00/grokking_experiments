@@ -82,7 +82,7 @@ def get_dataloaders():
     # 1. Configuration Setup
     dataset_name = 'CIFAR10'
     dataset_type = '10mil'
-    data_root = '../mnt/ai_workspace/data'
+    data_root = '../../mnt/ai_workspace/data'
     batch_size = 1024
     num_workers = 4
 
