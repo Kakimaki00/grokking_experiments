@@ -55,7 +55,7 @@ class Trainer:
     def compute_loss(self, outputs, labels):
         log_probs = F.log_softmax(outputs, dim=1)
         num_classes = outputs.size(1)
-        targets = self._create_smoothed_targets(labels, num_classes, self.label_smoothing)
+        targets = self._create_smoothed_targets(labels, num_classes)
         loss = self.criterion(log_probs, targets)
         return loss
 
