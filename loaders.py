@@ -1,10 +1,48 @@
 import os
 import torch
+import random 
 import numpy as np
 from PIL import Image
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader, Dataset, ConcatDataset, Sampler, Subset
+
+
+class MixupWrapper(Dataset):
+    def __init__(self, dataset, num_classes):
+        self.dataset = dataset
+        self.num_classes = num_classes
+
+    def __len__(self):
+        return len(self.dataset)
+
+    def _to_one_hot(self, label):
+        one_hot = torch.zeros(self.num_classes)
+        one_hot[label] = 1.0
+        return one_hot
+
+    def __getitem__(self, idx):
+        img1, lbl1 = self.dataset[idx]
+        
+        # 50% chance to return standard data (with one-hot label)
+        if random.random() < 0.5:
+            return img1, self._to_one_hot(lbl1)
+
+        # 50% chance to apply Mixup with a different class
+        while True:
+            idx2 = random.randint(0, len(self.dataset) - 1)
+            img2, lbl2 = self.dataset[idx2]
+            if lbl1 != lbl2:
+                break
+
+        # Generate random ratio between 0 and 1
+        lam = random.random()
+
+        # Average images and labels based on the ratio
+        mixed_img = lam * img1 + (1 - lam) * img2
+        mixed_lbl = lam * self._to_one_hot(lbl1) + (1 - lam) * self._to_one_hot(lbl2)
+
+        return mixed_img, mixed_lbl
 
 
 class FastDynamicRandomSampler(Sampler):
@@ -161,6 +199,9 @@ def get_dataloaders():
         train_sampler = None
         shuffle_train = True
 
+    # Apply Mixup to training data
+    train_set = MixupWrapper(train_set, num_classes=10)
+    
     # 7. Create DataLoaders
     train_loader = DataLoader(
         train_set,
