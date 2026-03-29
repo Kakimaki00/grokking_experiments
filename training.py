@@ -46,10 +46,8 @@ class Trainer:
 
     def _create_smoothed_targets(self, labels, num_classes):
         smoothing = self.config["label_smoothing"]
-        batch_size = labels.size(0)
-        one_hot = torch.zeros(batch_size, num_classes, device=self.device)
-        one_hot.scatter_(1, labels.unsqueeze(1), 1)
-        smoothed = (1.0 - smoothing) * one_hot + smoothing / num_classes
+        # 'labels' is already a float tensor of shape (batch_size, num_classes)
+        smoothed = (1.0 - smoothing) * labels + smoothing / num_classes
         return smoothed
 
     def compute_loss(self, outputs, labels):
