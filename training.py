@@ -197,7 +197,7 @@ class Trainer:
         with open(log_path, 'w') as f:
             json.dump(history, f, indent=4)
 
-        if (epoch + 1) % 100 == 0:
+        if (epoch + 1) % 200 == 0:
             state = {
                 'epoch': epoch,
                 'model_state': self.model.state_dict(),
