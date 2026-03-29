@@ -69,7 +69,7 @@ class Trainer:
         outputs = self.model(inputs)
         loss = self.compute_loss(outputs, labels)
         _, pred = outputs.max(1)
-        correct = pred.eq(labels).sum().item()
+        correct = pred.eq(labels.argmax(dim=1)).sum().item()
         
         return loss.item(), correct
 
@@ -97,7 +97,7 @@ class Trainer:
             # Record Clean Metrics
             metrics['clean_loss'] += loss.item()
             _, pred = outputs.max(1)
-            metrics['clean_acc'] += pred.eq(labels).sum().item()
+            metrics['clean_acc'] += pred.eq(labels.argmax(dim=1)).sum().item()
             
             if epoch_num % 10 == 0:
                 # 2. Logging Adversarial Metrics (No Training)
