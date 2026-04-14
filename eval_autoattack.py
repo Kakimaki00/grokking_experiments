@@ -21,7 +21,7 @@ def run_autoattack(model_path, num_samples, log_file):
     # Load checkpoint
     checkpoint = torch.load(model_path, map_location=device)
     # Handle both raw state_dicts and nested checkpoint dictionaries
-    state_dict = checkpoint.get('state_dict', checkpoint)
+    state_dict = checkpoint.get('model_state', checkpoint)
     
     # Strip "module." prefix if the model was saved using DataParallel
     state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
