@@ -16,7 +16,7 @@ def run_autoattack(model_path, num_samples, log_file):
     x_test = torch.stack([testset[i][0] for i in range(num_samples)])
     y_test = torch.tensor([testset[i][1] for i in range(num_samples)])
 
-    model = WideResNet28_10()
+    model = WideResNet28_10(num_classes=10)
 
     # Load checkpoint
     checkpoint = torch.load(model_path, map_location=device)
